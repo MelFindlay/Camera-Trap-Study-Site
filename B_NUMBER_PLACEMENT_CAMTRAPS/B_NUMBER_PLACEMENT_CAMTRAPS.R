@@ -1,7 +1,7 @@
 rm(list=ls())
 
 #LOAD DATA
-main<-read.csv("2_DETECTABILITY")
+main<-read.csv("B_NUMBER_PLACEMENT_CAMTRAPS.csv")
 
 #LOAD MIXED MODELS
 require(lme4)
@@ -41,7 +41,7 @@ anova(null.model,model1,test="Chi")
 #BY CAMERA POSITION AND GROUP SIZE OR INTERACTION
 ################################################
 
-main<-read.csv("2_DETECTABILITY")
+main<-read.csv("B_NUMBER_PLACEMENT_CAMTRAPS.csv")
 
 #CREATE A DUAL VECTOR (AS RESPONSE VARIABLE) OF SUCCESSES AND FAILURES RENAMING s.beh AS SUCCESS 
 #AND d.beh-s.beh AS FAILURES#
