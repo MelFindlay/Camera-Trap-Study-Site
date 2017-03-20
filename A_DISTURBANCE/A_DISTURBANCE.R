@@ -1,7 +1,7 @@
 rm(list=ls())
 
 #READ IN DATA 
-master<-read.csv("1_DISTURBANCE.csv")
+master<-read.csv("A_DISTURBANCE.csv")
 
 #CONVERT CHECK id FROM NUMBER TO FACTOR. 
 #NOTES: Check ID is a numerical identifier for each event
