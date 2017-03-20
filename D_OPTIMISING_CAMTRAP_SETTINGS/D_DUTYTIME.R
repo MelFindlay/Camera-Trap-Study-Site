@@ -21,7 +21,7 @@ ukgrid ="+init=epsg:27700"
 latlong ="+init=epsg:4326"
 
 # read in csv data 'master' containing Easting, Northing and Date
-df<-read.csv(file.choose(), header=TRUE)
+df<-read.csv("D_DUTYTIME.csv", header=TRUE)
 df<-na.omit(df)
 
 # convert dates to POSIXct-note year is in upper case, lower case used if just two numbers used for year i.e.y for 16 Y for 2016
@@ -59,7 +59,6 @@ return(output)
 #######################################################
 
 require(rgeos)
-rm(list=ls())
 main<-getSunTimes()  # HERE READ IN "5_DUTY.csv" 
 
 #CREATE VARIABLES BY SUBTRACTING EVENT FROM SS AND SR

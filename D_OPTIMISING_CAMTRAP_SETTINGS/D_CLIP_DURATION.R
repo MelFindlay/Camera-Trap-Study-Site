@@ -12,7 +12,7 @@ require(Hmisc)
 #4_FAF_PRIMANDSEC (FOR IDENTIFYING SEX USING PRIMARY AND SECONDARY CHARACTERISTICS)
 #4_FAF_SCENT (SPRAINT OR URINE)
 
-main<-read.csv("4_FAF_PRIM")
+main<-read.csv("D_FAF_PRIMANDSEC.csv")
 
 ############################
 # FAF PROBABILITY ANALYSES #
@@ -24,12 +24,12 @@ main<-read.csv("4_FAF_PRIM")
 fif<-sort(na.omit(main$FAF.PRIM))
 
 #RANK DATA
-ranks<-1:length(faf)
+ranks<-1:length(fif)
 cum.prop<-function(x){x/x[length(x)]}
 props<-cum.prop(ranks)
 
 # PLOT THE DATA TO SEE HOW THEY LOOK
-plot(props~faf,type="l",xlab="title",ylab="Proportion of events",lwd=2)
+plot(props~fif,type="l",xlab="title",ylab="Proportion of events",lwd=2)
 abline(h=c(0.75,0.90,0.95),lty=2)
 minor.tick(nx=10)
 
