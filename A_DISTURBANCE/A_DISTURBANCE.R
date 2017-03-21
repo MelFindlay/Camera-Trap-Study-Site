@@ -5,10 +5,9 @@ master<-read.csv("A_DISTURBANCE.csv")
 
 #CONVERT CHECK id FROM NUMBER TO FACTOR. 
 #NOTES: Check ID is a numerical identifier for each event
-#variable called over15 denotes rest of over 15 mins, 1= yes 0=No
-#where mins in holt = 700, this is a dummy to represent 
-#instances when otter emerges at dusk with a dry coat after 
-#a diurnal rest but time of entry isnt known
+#variable called "rest" denotes rest of over 15 mins, 1= yes 0=No
+#where mins in holt = 700, this is a dummy to represent instances when otter emerges at dusk with a dry coat after 
+#a diurnal rest but time of entry isnt known, so included as a rest
 master$CHECK.ID<-as.factor(master$CHECK.ID)
 
 #LOAD MIXED MODELS
@@ -39,13 +38,15 @@ master.sub<-data.frame(master.sub,NB.only)
 
 ####CREATE MODELS AND TEST########
 #ANALYSIS 1. TESTING NATAL AND EARLY COMBINED VS OTHER FUNCTIONS
+modelNER1<-glm(rest~natandearly*DAYS.SINCE.CHECK,family="binomial",data=master.sub)
 modelNER<-glm(rest~natandearly+DAYS.SINCE.CHECK,family="binomial",data=master.sub)
-modelNER
-anova(modelNER, test="Chi")
+modelNER1
+anova(modelNER1, test="Chi")
 
 ##ANALYSIS 2. TESTING ALL BREEDING VS NON BREEDING
+modelNB1<-glm(rest~NB.only*DAYS.SINCE.CHECK,family="binomial",data=master.sub)
 modelNB<-glm(rest~NB.only+DAYS.SINCE.CHECK,family="binomial",data=master.sub)
-modelNB
+modelNB1
 anova(modelNB, test="Chi")
 
 
