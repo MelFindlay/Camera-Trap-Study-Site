@@ -7,51 +7,69 @@ rm(list=ls())
 require(manipulate)
 require(Hmisc)
 
-# READ IN DATAFRAMES OF INTEREST
+# DATAFRAMES OF INTEREST
 #4_FAF_PRIM (FOR IDENTIFYING SEX USING PRIMARY CHARACTERISTICS)
 #4_FAF_PRIMANDSEC (FOR IDENTIFYING SEX USING PRIMARY AND SECONDARY CHARACTERISTICS)
 #4_FAF_SCENT (SPRAINT OR URINE)
 
-main<-read.csv("D_FAF_PRIMANDSEC.csv")
+main<-read.csv("D_FAF_PRIM.csv")
+main1<-read.csv("D_FAF_PRIMANDSEC.csv")
+main2<-read.csv("D_FAFSCENT.csv")
 
-############################
-# FAF PROBABILITY ANALYSES #
-############################
+#############################################################
+# FAF PROBABILITY ANALYSES for PRIMARY SEX CHARACTERISTICS #
+############################################################
 
 # GENERATE APPROPRIATE VARIABLES FOR ANALYSIS 
 #eg id sex from primary characteristics
  
-fif<-sort(na.omit(main$FAF.PRIM))
+faf<-sort(na.omit(main$FAF.PRIM))
+
+#for analysis for primary and/or secondary, clear lists using 
+#rm(list=ls())
+#replace main with main1, and FAF.PRIM with FAF.PRIMSEC
+
+#for analysis of scent, clear lists using
+#rm(list=ls())
+#replace main with main2, and FAF.PRIM with FAF.SCENT
 
 #RANK DATA
-ranks<-1:length(fif)
+ranks<-1:length(faf)
 cum.prop<-function(x){x/x[length(x)]}
 props<-cum.prop(ranks)
 
 # PLOT THE DATA TO SEE HOW THEY LOOK
-plot(props~fif,type="l",xlab="title",ylab="Proportion of events",lwd=2)
+plot(props~faf,type="l",xlab="title",ylab="Proportion of events",lwd=2)
 abline(h=c(0.75,0.90,0.95),lty=2)
 minor.tick(nx=10)
 
 #include clips 1-30 sec long
-fif.z<-fif[fif>0 & fif<31]
-props.z<-props[fif>0 & fif<31]
+faf.z<-faf[faf>0 & faf<31]
+props.z<-props[faf>0 & faf<31]
 
 # PLOT THE DATA 
-plot(props.z~fif.z,xlab="Time (s)",ylab="Proportion of events",lwd=2,ylim=c(0,1))
+plot(props.z~faf.z,xlab="Time (s)",ylab="Proportion of events",lwd=2,ylim=c(0,1))
 abline(h=c(0.95),lty=2)
 minor.tick(nx=10)
 
 ###############################################
 # ASSIGN VARIABLES TO x and y
-x <-fif.z
+x <-faf.z
 y <-props.z
-x1<-fif
+x1<-faf
 y1<-props
 
 #########################################
 # MANIPULATE PACKAGE TO FIND BEST MODEL #
 ##########################################
+
+#IMPORTANT NOTE
+#THE FOLLOWING CHUNK OF CODE WILL GENERATE A GRAPH AND THREE SLIDERS WILL APPEAR
+#YOU NEED TO MANUALLY MOVE THESE SLIDERS TO TRY TO MATCH THE CURVE ON THE GRAPH. 
+#WHEN YOU GET SOMETHING APPROXIMATING THE SLOPE AND POSITION OF THE CURVE, YOU CAN CONTINUE THROUGH THE CODE
+#AND THE SLIDERS WILL DISAPPEAR.
+#THE MODEL WILL THEN USE THE PARAMETERS FROM THE VISUAL FIT AS STARTING VALUES TO WORK OUT THE BEST FIT.
+
 start <- list() 
 # GENERATE SLIDERS
 manipulate( 
@@ -61,12 +79,12 @@ manipulate(
     curve(a*(1-exp(-c*x))+d, add=TRUE) 
     start <<- list(a=a,c=c,d=d) 
   },
-  a0 = slider(0, 2, step=0.001, initial = 0),  # MANIPULATE SLIDERS TO FIT CURVE FOR VALUES OF 'initial'
+  a0 = slider(0, 2, step=0.001, initial = 0),
   c0 = slider(0, 1, step=0.01, initial = 0),
   d0 = slider(0, 1, step=0.01, initial = 0)
 ) 
 #####################################################
-# FIT MODEL ISING ESTIMATES FROM SLIDERS, THESE ARE USED AS A STARTING POINT  
+# FIT MODEL ISING ESTIMATES FROM SLIDER  
 FAFmodel<-nls(y ~ a*(1-exp(-c*x))+d, start = start) 
 summary(FAFmodel)
 
@@ -89,7 +107,7 @@ lower.y<-a*(1-exp(-c*xs))+d
 points(lower.y~xs,type="l",lty=3)
 
 # UPPER BOUNDS OF PARAMETER ESTIMATES
-upper<-summary(FIFmodel)$parameters[,1]+summary(FIFmodel)$parameters[,2]
+upper<-summary(FAFmodel)$parameters[,1]+summary(FAFmodel)$parameters[,2]
 xs<- seq(1, max(x), by = 0.1)
 a<-upper[1]
 c<-upper[2]
