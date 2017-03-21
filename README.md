@@ -12,6 +12,6 @@ B Number and Placement of Camera traps. B_NUMBER_PLACEMENT_CAMTRAPS.R and B_NUMB
 C Study duration. C_STUDY_DURATION.R and two dataframes (1) C_STUDYDURATION_REST.CSV (containing records of "rests" of otter longer then 15 mins)
 and (2) C_STUDY_DURATION_PRESENCE.CSV (which contains all registrations of otter at the holt).
 
-D Optimal camera trap settings. The first analysis looks at clip duration which assesses when a feature is first apparent in frame i.e. FAF. D_CLIP_DURATION.R and two csv files D_FAF_PRIM.csv (sex ID from primary characteristics) and D_FAFPRIMANDSEC.csv (sex ID using primary and secondary characteristics).
+D Optimal camera trap settings. The first analysis looks at clip duration which assesses when a feature is first apparent in frame i.e. FAF. D_CLIP_DURATION.R and three csv files D_FAF_PRIM.csv (sex ID from primary characteristics) and D_FAFPRIMANDSEC.csv (sex ID using primary and secondary characteristics)and D_FAFSCENT.csv (contains number of seconds until spraint/urine observed)
 
 The second analysis in D investigates when otters were active to see if a duty time could be set with minimal loss of data. D_DUTYTIME.R to be used with D_DUTYTIME.csv
