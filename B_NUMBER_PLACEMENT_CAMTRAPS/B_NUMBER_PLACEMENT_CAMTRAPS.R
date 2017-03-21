@@ -43,10 +43,10 @@ anova(null.model,model1,test="Chi")
 
 main<-read.csv("B_NUMBER_PLACEMENT_CAMTRAPS.csv")
 
-#CREATE A DUAL VECTOR (AS RESPONSE VARIABLE) OF SUCCESSES AND FAILURES RENAMING s.beh AS SUCCESS 
-#AND d.beh-s.beh AS FAILURES#
-successes<-S.BEH
-failures<-D.BEH-S.BEH
+#CREATE A DUAL VECTOR (AS RESPONSE VARIABLE) OF SUCCESSES AND FAILURES RENAMING s.beh.count AS SUCCESS 
+#AND d.beh.count-s.beh.count AS FAILURES#
+successes<-S.BEH.COUNT
+failures<-D.BEH-S.BEH.COUNT
 y<-cbind(successes,failures)
 
 
