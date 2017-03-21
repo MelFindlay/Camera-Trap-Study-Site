@@ -23,7 +23,7 @@ main2<-read.csv("D_FAFSCENT.csv")
 # GENERATE APPROPRIATE VARIABLES FOR ANALYSIS 
 #eg id sex from primary characteristics
  
-faf<-sort(na.omit(main$FAF.PRIM))
+faf<-sort(na.omit(main$PRIM.SEX))
 
 #for analysis for primary and/or secondary, clear lists using 
 #rm(list=ls())
